@@ -1,5 +1,6 @@
-const User = require ('../models/User')
+const User = require ('../models/User');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 async function index(req, res) {
     try {
@@ -27,7 +28,16 @@ async function showByUsername (req, res) {
         if(!user){ throw new Error('No user found') }
         const authed = bcrypt.compare(req.body.password, user.password)
         if (!!authed){
-            res.status(200).json({ user: user.name })
+
+            const payload = { username: user.name, user_id: user.id }
+            const sendToken = (err, token) => {
+                if(err){ throw new Error('Error in token generation') }
+                res.status(200).json({
+                    success: true,
+                    token: "Bearer " + token,
+                });
+            }
+            jwt.sign(payload, 'supersecret-secret', { expiresIn: 3600 }, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
         }
