@@ -20,5 +20,16 @@ describe('compelte controllers', () => {
         })
     })
 
+    describe('create', () => {
+        test('it resolves with date on successful db query', async () => {
+            let completionDateData = { habit_id:40, date:"01-01-01" }
+
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({rows: [ completionDateData] });
+            const result = await Complete.create(completionDateData);
+            expect(result).toBeInstanceOf(Complete)
+        })
+    });
+
     
 })

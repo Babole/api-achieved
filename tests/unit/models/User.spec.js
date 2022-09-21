@@ -3,6 +3,7 @@ const pg = require('pg');
 jest.mock('pg');
 
 const db = require('../../../dbConfig/init');
+const { findByUsername } = require('../../../models/User');
 
 describe('User', () => {
 
@@ -28,5 +29,18 @@ describe('User', () => {
             expect(result).toHaveProperty('id')
         })
     });
+
+    describe('findByUsername', () => {
+        test('it resolves with user on successful db query', async () => {
+            let userData = { id: 10, name:'username', password:"password" }
+
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({rows: [ userData ] });
+            const result = await User.findByUsername('username');
+            console.log(result)
+            expect(result).toBeInstanceOf(User)
+        })
+    });
+
     
 })
