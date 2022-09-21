@@ -2,7 +2,7 @@ const db = require('../dbConfig/init');
 
 module.exports = class Complete {
     constructor(data) {
-        this.data = data.date
+        this.date = data.date
         this.habitId = data.habit_id
     }
 
