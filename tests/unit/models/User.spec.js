@@ -4,7 +4,8 @@ jest.mock('pg');
 
 const db = require('../../../dbConfig/init');
 
-describe('Author', () => {
+describe('User', () => {
+
     beforeEach(() => jest.clearAllMocks())
 
     afterAll(() => jest.resetAllMocks())
