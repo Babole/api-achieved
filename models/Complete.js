@@ -21,6 +21,17 @@ module.exports = class Complete {
         });
     };
 
+    static create(completionData){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let completedDate = await db.query(`INSERT INTO completed (habit_id,date) VALUES ($1,$2) RETURNING *;`, [ completionData.habit_id, completionData.date ]);
+                resolve (new Complete(completedDate.rows[0]));
+            } catch (err) {
+                reject('Completion date could not be posted');
+            };
+        });
+    };
+
     // delete dates along with achivement (tue)
     // destroy(){
     //     return new Promise(async(resolve, reject) => {

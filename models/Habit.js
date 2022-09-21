@@ -1,11 +1,10 @@
 const db = require('../dbConfig/init');
 
-const User = require('./User')
-
 module.exports = class Habit {
     constructor(data) {
         this.id = data.id
         this.description = data.description
+        this.frequency = data.frequency
         this.userId = data.user_id
     }
 
@@ -38,7 +37,7 @@ module.exports = class Habit {
     static create(habit){
         return new Promise (async (resolve, reject) => {
             try {
-                let habitData = await db.query(`INSERT INTO habits (description,user_id) VALUES ($1,$2) RETURNING *;`, [ habit.description, habit.user_id]);
+                let habitData = await db.query(`INSERT INTO habits (description,frequency,user_id) VALUES ($1,$2,$3) RETURNING *;`, [ habit.description, habit.frequency, habit.user_id]);
                 resolve (new Habit(habitData.rows[0]));
             } catch (err) {
                 reject('Habit could not be created');

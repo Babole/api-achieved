@@ -8,4 +8,14 @@ async function show(req, res) {
         res.status(404).json({err})
     }
 }
-module.exports = { show }
+
+async function create (req, res) {
+    try {
+        const completionDate = await Complete.create(req.body);
+        res.status(201).json(completionDate)
+    } catch (err) {
+        res.status(422).json({err})
+    }
+}
+
+module.exports = { show, create }
