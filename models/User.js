@@ -50,9 +50,8 @@ module.exports = class User {
     static updateUser(data) {
         return new Promise(async (resolve, reject) => {
             try {
-                let update = await db.query(`UPDATE users SET ${data.column_to_change} = ${data.value} WHERE id = ${data.user_id} RETURNING *;`);
+                let update = await db.query(`UPDATE users SET ${data.column_to_change} = $1 WHERE id = ${data.user_id} RETURNING *;`, [ data.value ]);
                 let user = new User(update.rows[0])
-                console.log(user)
                 resolve(user)
             } catch (err) {
                 reject(`Error retrieving user ${err}`);
