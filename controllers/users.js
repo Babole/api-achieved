@@ -27,9 +27,6 @@ async function showByUsername (req, res) {
         const user = await User.findByUsername(req.body.name)
         if(!user){ throw new Error('No user found') }
         const authed = await bcrypt.compare(req.body.password, user.password)
-        console.log(req.body.password)
-        console.log(user.password)
-        console.log(authed)
         if (!!authed){
             const payload = { username: user.name, user_id: user.id, streak: user.streak, last_update: user.last_update }
             const sendToken = (err, token) => {
