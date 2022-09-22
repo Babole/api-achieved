@@ -25,20 +25,21 @@ async function create(req, res) {
 async function showByUsername (req, res) {
     try {
         const user = await User.findByUsername(req.body.name)
-        console.log(user)
         if(!user){ throw new Error('No user found') }
-        const authed = bcrypt.compare(req.body.password, user.password)
+        const authed = await bcrypt.compare(req.body.password, user.password)
+        console.log(req.body.password)
+        console.log(user.password)
+        console.log(authed)
         if (!!authed){
             const payload = { username: user.name, user_id: user.id, streak: user.streak, last_update: user.last_update }
             const sendToken = (err, token) => {
-                console.log(token)
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
                     success: true,
                     token: "Bearer " + token,
                 });
             }
-            jwt.sign(payload, process.env.SECRET, { expiresIn: 3600 }, sendToken);
+            jwt.sign(payload, "process.env.SECRET", { expiresIn: 3600 }, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
         }
