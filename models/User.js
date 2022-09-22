@@ -5,6 +5,8 @@ module.exports = class User {
         this.id = data.id
         this.name = data.name
         this.password = data.password
+        this.streak = data.streak
+        this.last_update = data.last_update
 
     };
 
@@ -23,7 +25,8 @@ module.exports = class User {
     static create(user){
         return new Promise (async (resolve, reject) => {
             try {
-                let userData = await db.query(`INSERT INTO users (name,password) VALUES ($1,$2) RETURNING *;`, [ user.name, user.password ]);
+                const new_streak = 0
+                let userData = await db.query(`INSERT INTO users (name,password,streak,last_update) VALUES ($1,$2,$3,$4) RETURNING *;`, [ user.name, user.password, new_streak, user.last_update ]);
                 resolve(userData.rows[0]);
             } catch (err) {
                 reject('User could not be created');
@@ -42,6 +45,19 @@ module.exports = class User {
             }
 
         });
+    }
+
+    static updateUser(data) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let update = await db.query(`UPDATE users SET ${data.column_to_change} = ${data.value} WHERE id = ${data.user_id} RETURNING *;`);
+                let user = new User(update.rows[0])
+                console.log(user)
+                resolve(user)
+            } catch (err) {
+                reject(`Error retrieving user ${err}`);
+            } 
+        })
     }
 
 

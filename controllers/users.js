@@ -25,12 +25,13 @@ async function create(req, res) {
 async function showByUsername (req, res) {
     try {
         const user = await User.findByUsername(req.body.name)
+        console.log(user)
         if(!user){ throw new Error('No user found') }
         const authed = bcrypt.compare(req.body.password, user.password)
         if (!!authed){
-
-            const payload = { username: user.name, user_id: user.id }
+            const payload = { username: user.name, user_id: user.id, streak: user.streak, last_update: user.last_update }
             const sendToken = (err, token) => {
+                console.log(token)
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
                     success: true,
@@ -46,4 +47,21 @@ async function showByUsername (req, res) {
     }
 }
 
-module.exports = { index, create, showByUsername }
+async function update (req, res) {
+    try {
+        const user = await User.updateUser(req.body)
+        const payload = { username: user.name, user_id: user.id, streak: user.streak, last_update: user.last_update }
+        const sendToken = (err, token) => {
+            if(err){ throw new Error('Error in token generation') }
+            res.status(200).json({
+                success: true,
+                token: "Bearer " + token,
+            });
+        }
+        jwt.sign(payload, process.env.SECRET, { expiresIn: 3600 }, sendToken);
+    } catch (err) {
+        res.status(500).json({err});
+    }
+}
+
+module.exports = { index, create, showByUsername, update }
