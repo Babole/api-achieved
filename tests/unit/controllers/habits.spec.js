@@ -16,7 +16,7 @@ describe('habits controller', () => {
             let testHabit = {
                 id: 10,
                 description: "showing description habit",
-                user_id: 10
+                user_id: 5
 
             }
             jest.spyOn(Habit, 'findById')
@@ -34,16 +34,16 @@ describe('habits controller', () => {
             let testHabit = {
                 id: 10,
                 description: "showing description habit",
-                user_id: 10
+                user_id: 5
 
             }
-            jest.spyOn(Habit, 'findById')
-                .mockResolvedValue(new Habit(testHabit));
+            jest.spyOn(Habit, 'findByUserId')
+                .mockResolvedValue('this test is useless');
 
-            const mockReq = { params: { id: 10 } }
-            await habitsController.showById(mockReq, mockRes);
+            const mockReq = { params: { id: 5 } }
+            await habitsController.showByUserId(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
-            expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
+            expect(mockJson).toHaveBeenCalledWith('this test is useless');
         })
     });
 
@@ -66,15 +66,15 @@ describe('habits controller', () => {
 
     });
 
-    // describe('destroy', () => {
-    //     test('it returns a 204 status code on successful deletion', async () => {
-    //         jest.spyOn(Habit.prototype, 'destroy')
-    //             .mockResolvedValue('Deleted');
+    describe('destroy', () => {
+        test('it returns a 204 status code on successful deletion', async () => {
+            jest.spyOn(Habit.prototype, 'destroy')
+                .mockResolvedValue('delete');
 
-    //         const mockReq = { params: { id: 1 } }
-    //         await habitsController.destroy(mockReq, mockRes);
-    //         expect(mockStatus).toHaveBeenCalledWith(204);
-    //     })
-    // });
+            const mockReq = { params: { id: 1 } }
+            await habitsController.destroy(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(204);
+        })
+    });
 
 })

@@ -32,18 +32,4 @@ module.exports = class Complete {
         });
     };
 
-    // delete dates along with achivement (tue)
-    // destroy(){
-    //     return new Promise(async(resolve, reject) => {
-    //         try {
-    //             const result = await db.query(`DELETE date FROM completed WHERE id = $1 RETURNING id`, [ this.id ]);
-    //             resolve(`Achievements ${result.id} was deleted`)
-    //         } catch (err) {
-    //             reject('Achievements could not be deleted')
-    //         }
-    //     })   
-    // }
-
-
-
 }

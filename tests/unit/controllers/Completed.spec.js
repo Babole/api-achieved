@@ -28,4 +28,22 @@ describe('completed controller', () => {
         })
     });
 
+    describe('create', () => {
+        test('on completion creation returns a 201 status code', async () => {
+            // let testCompletion = {
+            //     date: "21_32_32",
+            //     thisisalsouseless: 5
+            // }
+            jest.spyOn(Complete, 'create')
+                .mockResolvedValue();
+
+            const mockReq = 'this is useless'
+            await completedController.create(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(201);
+            // expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
+        })
+
+
+    });
+
 })

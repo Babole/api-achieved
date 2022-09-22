@@ -27,6 +27,6 @@ describe('user endpoints', () => {
                 password: 'test_pass3'
             })
         expect(res.statusCode).toEqual(201);
-        expect(res.body).toHaveProperty("");
+        expect(res.body.msg).toEqual('User created');
     });
 })

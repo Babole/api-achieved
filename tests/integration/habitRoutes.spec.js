@@ -13,10 +13,9 @@ describe('habits endpoints', () => {
         await api.close()
     })
 
-    it('should retrieve a habit based on user_id', async () => {
+    it('access to habit based on user_id should be denied (code 403)', async () => {
         const res = await request(api).get('/habits/user/1')
-        expect(res.statusCode).toEqual(200)
-        expect(res[0].description).toEqual('Test description')
+        expect(res.statusCode).toEqual(403)
     });
 
 

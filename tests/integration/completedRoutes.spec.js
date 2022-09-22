@@ -16,9 +16,7 @@ describe( 'completedRoutes endpoint', () => {
     it('should retrieve a date based on habit_id', async () => {
         const res = await request(api).get('/completion_dates/1')
         expect(res.statusCode).toEqual(200)
-        console.log(res)
-        console.log(typeof res)
-        expect(res[0].date).toEqual('16_09_22')
+        expect(res.body[0].date).toEqual('16_09_22')
     });
 
 
