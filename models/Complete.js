@@ -9,7 +9,7 @@ module.exports = class Complete {
     static findByHabitId(id){
         return new Promise (async (resolve, reject) => {
             try {
-                let completionDates = await db.query(`SELECT date FROM completed WHERE habit_id = $1;`, [ id ]);
+                let completionDates = await db.query(`SELECT * FROM completed WHERE habit_id = $1;`, [ id ]);
                 if(!!completionDates.rows.length){
                     resolve (completionDates.rows.map(a => new Complete(a)))
                 } else {
