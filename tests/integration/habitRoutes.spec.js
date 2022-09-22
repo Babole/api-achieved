@@ -1,9 +1,8 @@
 describe('habits endpoints', () => {
     let api;
-
     beforeEach(async () => {
         await resetTestDB()
-    })
+    });
 
     beforeAll(async () => {
         api = app.listen(5000, () => console.log('Test server running on port 5000'))
@@ -15,9 +14,9 @@ describe('habits endpoints', () => {
     })
 
     it('should retrieve a habit based on user_id', async () => {
-        const res = await request(api).get('/habit/1')
+        const res = await request(api).get('/habits/user/1')
         expect(res.statusCode).toEqual(200)
-        expect(res.body.name).toEqual('habit1')
+        expect(res[0].description).toEqual('Test description')
     });
 
 
