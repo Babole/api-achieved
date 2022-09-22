@@ -1,9 +1,6 @@
 const usersController = require('../../../controllers/users')
 const User = require('../../../models/User');
 
-const habitsController = require('../../../controllers/habits')
-const Habit = require('../../../models/Habit');
-
 const mockSend = jest.fn();
 const mockJson = jest.fn();
 const mockStatus = jest.fn(code => ({ send: mockSend, json: mockJson }))
@@ -26,8 +23,8 @@ describe('users controller', () => {
 
     describe('create', () => {
         test('returns a 500 :) status code on creating new user', async () => {
-            // jest.spyOn(User, 'create')
-            //     .mockResolvedValue();
+            jest.spyOn(User, 'create')
+                .mockResolvedValue();
  
             const mockReq = 'its not cheating if it works'
             await usersController.create(mockReq, mockRes);
@@ -37,8 +34,8 @@ describe('users controller', () => {
 
     describe('showByUsername', () => {
         test('returns a 401 status code on show by username', async () => {
-            // jest.spyOn(User, 'findByUsername')
-            //     .mockResolvedValue();
+            jest.spyOn(User, 'findByUsername')
+                .mockResolvedValue();
  
             const mockReq = 'nothing'
             await usersController.showByUsername(mockReq, mockRes);
