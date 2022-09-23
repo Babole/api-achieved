@@ -1,6 +1,6 @@
-INSERT INTO users (name, password)
+INSERT INTO users (name, password, streak, last_update)
 VALUES
-('example1','examplepass');
+('example1','examplepass',5,'21_09_22');
 
 INSERT INTO habits (description,frequency,user_id)
 VALUES
