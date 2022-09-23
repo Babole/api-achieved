@@ -1,4 +1,4 @@
-# # Achieved (API)
+# Achieved (API)
 
 *The achieve client-side repo can be found here -> [Achieve API](https://github.com/ultimafinal1/Lap-2-Project-Client)*
 
